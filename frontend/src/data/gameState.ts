@@ -1,6 +1,7 @@
-export { IDEAL_TEMPERATURE } from '../constants/game'
+export { IDEAL_TEMPERATURE, IDEAL_AIR_QUALITY } from '../constants/game'
 export type { WeatherData, AirQualityData, WorldData } from '../types/game'
 export { calculateTemperatureDamage } from '../systems/TemperatureSystem'
+export { calculateAirQualityDamage } from '../systems/AirQualitySystem'
 export { calculateMultipliers } from '../systems/EconomySystem'
 
 export const getPlaceholderWorldData = (): import('../types/game').WorldData => {

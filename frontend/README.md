@@ -21,6 +21,54 @@ The core gameplay loop combines player actions (clicking) with passive generatio
 
 The game operates on **three coordinated loops** that work together seamlessly:
 
+### Game Loop Flow (Every 1 Second)
+
+```mermaid
+flowchart TD
+    A[Game Loop Starts<br/>Every 1 Second] --> B{Game Started?}
+    B -->|No| Z[Exit]
+    B -->|Yes| C{World Data Available?}
+    C -->|No| Z
+    C -->|Yes| D[Calculate Damage]
+    
+    D --> E["Temperature Damage<br/>abs(temp - 25°C) × 0.2"]
+    D --> F["Air Quality Damage<br/>abs(aqi - 50) × 0.02"]
+    
+    E --> G[Combine Total Damage]
+    F --> G
+    
+    G --> H{Health Stabilizer Active?}
+    H -->|Yes| I[Reduce Health Damage by 50%]
+    H -->|No| J[Apply Full Health Damage]
+    
+    G --> K{Power Stabilizer Active?}
+    K -->|Yes| L[Reduce Energy Damage by 50%]
+    K -->|No| M[Apply Full Energy Damage]
+    
+    I --> N["Calculate Idle SP<br/>0.1 × economyMultiplier"]
+    J --> N
+    L --> N
+    M --> N
+    
+    N --> O[Update Game State]
+    O --> P[Apply Health Damage]
+    O --> Q[Apply Energy Damage]
+    O --> R[Add Idle SP]
+    O --> S[Decrease Stabilizer Timers]
+    
+    P --> T[Wait 1 Second]
+    Q --> T
+    R --> T
+    S --> T
+    T --> A
+    
+    style A fill:#e1f5ff
+    style D fill:#fff4e1
+    style G fill:#ffe1e1
+    style N fill:#e1ffe1
+    style O fill:#f0e1ff
+```
+
 ### 1️⃣ Click Loop (Instant Response)
 - **Trigger:** Player clicks the main button
 - **Frequency:** On-demand (instant)

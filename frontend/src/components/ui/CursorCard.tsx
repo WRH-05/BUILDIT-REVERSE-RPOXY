@@ -23,8 +23,8 @@ export default function CursorCard({
   asset,
 }: CursorCardProps) {
   const spPerClick = calculateClickSP(clickPower, economyMultiplier)
-  const spPerMinute = clicksPerMinute * spPerClick
-  const info = `${clicksPerMinute} clicks/min • ${spPerMinute.toFixed(1)} SP/min`
+  const secondsPerClick = 60 / clicksPerMinute
+  const info = `1 click per ${secondsPerClick.toFixed(1)}s • ${spPerClick.toFixed(1)} SP/click`
 
   const defaultAsset = (
     <img

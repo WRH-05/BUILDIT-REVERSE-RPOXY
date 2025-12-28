@@ -1,9 +1,10 @@
 export const IDEAL_TEMPERATURE = 25
+export const IDEAL_AIR_QUALITY = 50
 
 export const FIX_COST = 10
 export const RESTORE_AMOUNT = 5
 
-export const CURSOR_CLICKS_PER_MINUTE = 10
+export const CURSOR_CLICKS_PER_MINUTE = 12
 export const CURSOR_CLICKS_INCREASE = 2
 export const HEALTH_STABILIZER_DURATION = 60
 export const POWER_STABILIZER_DURATION = 60

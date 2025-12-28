@@ -41,7 +41,7 @@ export default function Clicker({
           ref={buttonRef}
           onClick={handleClick}
           disabled={disabled}
-          className="w-24 h-24 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed border-4 border-black rounded-full flex items-center justify-center text-white text-2xl font-bold transition-all transform active:scale-95 shadow-lg relative z-10"
+          className="w-24 h-24 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed border-4 border-black rounded-full flex items-center justify-center text-white text-2xl font-bold transition-all transform active:scale-95 shadow-lg relative z-10"
         >
           CLICK
         </button>
@@ -50,7 +50,15 @@ export default function Clicker({
             +{lastSPAmount.toFixed(1)} SP
           </div>
         )}
-        {cursorCount > 0 && <AnimatedCursors cursorCount={cursorCount} clicksPerMinute={clicksPerMinute} />}
+        {cursorCount > 0 && (
+          <AnimatedCursors 
+            cursorCount={cursorCount} 
+            clicksPerMinute={clicksPerMinute}
+            clickPower={clickPower}
+            economyMultiplier={economyMultiplier}
+            onSPGenerated={onSPGenerated}
+          />
+        )}
       </div>
       
       <div className="text-center space-y-0.5">

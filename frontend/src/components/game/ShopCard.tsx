@@ -35,7 +35,7 @@ export default function ShopCard({
         <button
           onClick={onPurchase}
           disabled={!canAfford}
-          className={`mt-2 w-full py-1 px-2 rounded font-bold text-xs border-2 ${
+          className={`mt-2 w-full cursor-pointer py-1 px-2 rounded font-bold text-xs border-2 ${
             canAfford
               ? "bg-blue-500 hover:bg-blue-600 text-white border-blue-700 active:scale-95"
               : "bg-gray-300 text-gray-500 border-gray-400 cursor-not-allowed"

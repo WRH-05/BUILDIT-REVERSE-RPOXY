@@ -4,7 +4,6 @@ import Notifications from "../components/ui/Notifications"
 import Instructions from "../components/ui/Instructions"
 import { getPlaceholderWorldData } from "../data/gameState"
 import { useGameLoop } from "../hooks/useGameLoop"
-import { useCursorAutoClick } from "../hooks/useCursorAutoClick"
 import { Shop } from "../game/Shop"
 import { HealthSystem } from "../systems/HealthSystem"
 import { EnergySystem } from "../systems/EnergySystem"
@@ -81,17 +80,6 @@ const fetchAndUpdateWorldData = async () => {
     console.error(e)
   }
 }
-// const handleWorldRefresh = async () => {
-//   try {
-//     const newData = await fetchWorldData()
-//     setWorldData(newData)
-
-//     const nextFetch = Date.now() + (30000 + Math.random() * 30000)
-//     setNextDataFetchTime(nextFetch)
-//   } catch (e) {
-//     console.error("Failed to refresh world")
-//   }
-// }
 
   const handleSPGenerated = (amount: number) => {
     setSP(prev => prev + amount)
@@ -195,16 +183,6 @@ const fetchAndUpdateWorldData = async () => {
     },
   })
 
-  useCursorAutoClick({
-    gameStarted,
-    lost,
-    worldData,
-    cursorCount,
-    clicksPerMinute: cursorClicksPerMinute,
-    clickPower,
-    onSPGenerated: handleSPGenerated,
-  })
-
   useEffect(() => {
     if (!gameStarted) return
     
@@ -300,7 +278,6 @@ const fetchAndUpdateWorldData = async () => {
             onHospitalPurchase={handleHospitalPurchase}
             houseCost={houseCostRef.current}
             onHousePurchase={handleHousePurchase}
-            // onWorldRefresh={handleWorldRefresh}
             factoryCount={factoryCount}
             hospitalCount={hospitalCount}
             houseCount={houseCount}

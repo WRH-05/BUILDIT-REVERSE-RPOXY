@@ -1,20 +1,34 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import { calculateClickSP } from "../../systems/EconomySystem"
 
 type AnimatedCursorsProps = {
   cursorCount: number
   clicksPerMinute: number
+  clickPower: number
+  economyMultiplier: number
+  onSPGenerated: (amount: number) => void
 }
 
-export default function AnimatedCursors({ cursorCount, clicksPerMinute }: AnimatedCursorsProps) {
+export default function AnimatedCursors({ 
+  cursorCount, 
+  clicksPerMinute, 
+  clickPower, 
+  economyMultiplier, 
+  onSPGenerated 
+}: AnimatedCursorsProps) {
   const [clickingStates, setClickingStates] = useState<boolean[]>([])
+  const onSPGeneratedRef = useRef(onSPGenerated)
 
-  const CLICK_INTERVAL = 60000 / clicksPerMinute
+  useEffect(() => {
+    onSPGeneratedRef.current = onSPGenerated
+  }, [onSPGenerated])
 
   useEffect(() => {
     if (cursorCount === 0) return
 
     setClickingStates(Array(cursorCount).fill(false))
 
+    const CLICK_INTERVAL = 60000 / clicksPerMinute
     const intervals: ReturnType<typeof setInterval>[] = []
     const timeouts: ReturnType<typeof setTimeout>[] = []
 
@@ -22,7 +36,28 @@ export default function AnimatedCursors({ cursorCount, clicksPerMinute }: Animat
       const startDelay = (CLICK_INTERVAL / cursorCount) * i
 
       const timeout = setTimeout(() => {
+        const spGained = calculateClickSP(clickPower, economyMultiplier)
+        onSPGeneratedRef.current(spGained)
+
+        setClickingStates(prev => {
+          const newStates = [...prev]
+          newStates[i] = true
+          return newStates
+        })
+
+        setTimeout(() => {
+          setClickingStates(prev => {
+            const newStates = [...prev]
+            newStates[i] = false
+            return newStates
+          })
+        }, 200)
+
+        // Then set up interval for subsequent clicks
         const interval = setInterval(() => {
+          const spGained = calculateClickSP(clickPower, economyMultiplier)
+          onSPGeneratedRef.current(spGained)
+
           setClickingStates(prev => {
             const newStates = [...prev]
             newStates[i] = true
@@ -48,7 +83,7 @@ export default function AnimatedCursors({ cursorCount, clicksPerMinute }: Animat
       timeouts.forEach(timeout => clearTimeout(timeout))
       intervals.forEach(interval => clearInterval(interval))
     }
-  }, [cursorCount, clicksPerMinute])
+  }, [cursorCount, clicksPerMinute, clickPower, economyMultiplier])
 
   if (cursorCount === 0) return null
 

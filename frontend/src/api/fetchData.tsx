@@ -3,6 +3,8 @@ import type { WorldData } from "../types/game"
 // Example random options
 const countries = ["Algeria", "France", "USA", "Germany", "Japan"]
 const assets = ["btc", "eth", "ltc"]
+const API_URL = import.meta.env.VITE_API_URL;
+
 const mapAirQuality = (air: any) => {
   if (!air) return { aqi: 50, level: "Unknown" }
 
@@ -26,7 +28,7 @@ export const fetchWorldData = async (): Promise<WorldData> => {
     const randomAirCountry = countries[Math.floor(Math.random() * countries.length)]
     const randomAsset = assets[Math.floor(Math.random() * assets.length)]
 
-    const response = await fetch("http://72.146.216.162/api/state", {
+    const response = await fetch(`${API_URL}/api/state`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -41,7 +43,6 @@ export const fetchWorldData = async (): Promise<WorldData> => {
     }
 
     const data = await response.json()
-    console.log("Backend response:", data)
 
     return {
       economyMultiplier: data.economy?.[randomAsset + "_usd"] ? data.economy[randomAsset + "_usd"] / 10000 : 1.0,
