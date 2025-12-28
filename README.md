@@ -270,7 +270,8 @@ curl -X POST http://72.146.216.162/api/state \
 
 - **[Backend README](backend/README.md)** - API gateway, caching, rate limiting, deployment
 - **[Frontend README](frontend/README.md)** - Game mechanics, loops, upgrade system, rendering
-
+- https://github.com/Naaylla/reverse-proxy-frontend
+- https://github.com/Naaylla/reverse-proxy-backend
 ---
 
 ## 🏆 Hackathon Highlights
@@ -285,3 +286,4 @@ curl -X POST http://72.146.216.162/api/state \
 ---
 
 **Built for Hackathon 2025** | **Full-Stack TypeScript + Python** | **Production Deployed**
+
